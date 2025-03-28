@@ -13,14 +13,14 @@ class ProductsModel extends Database {
     {
         $stmt = $this->pdo->query("SELECT * FROM produtos");
 
-        if($stmt->rowCount() > 0) {
-            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if($stmt->rowCount() === 0) {
             http_response_code(200);
-            return json_encode($data);
-
-        }else {
             return json_encode(["message" => "Nenhum produto cadastrado"]);
         }
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        http_response_code(200);
+        return json_encode($data);
     }
 
     public function fetchById(int $id): string
@@ -28,14 +28,14 @@ class ProductsModel extends Database {
         $stmt = $this->pdo->prepare("SELECT * FROM produtos WHERE id = ?");
         $stmt->execute([$id]);
 
-        if($stmt->rowCount() > 0) {
-            $data = $stmt->fetch(PDO::FETCH_ASSOC);
-            return json_encode($data);
-
-        }else {
+        if($stmt->rowCount() === 0) {
             http_response_code(404);
             return json_encode(["message" => "Produto não encontrado"]);
         }
+
+        http_response_code(200);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        return json_encode($data);
     }
 
     public function insert(array $data): string

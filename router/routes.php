@@ -4,6 +4,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 switch ($method) {
     case 'GET':
         $routes = [
+            '/' => 'ProductsController@index',
             '/produtos' => 'ProductsController@index',
             '/produtos/{id}' => 'ProductsController@show'
         ];
