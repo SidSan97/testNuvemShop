@@ -6,7 +6,8 @@ switch ($method) {
         $routes = [
             '/' => 'ProductsController@index',
             '/produtos' => 'ProductsController@index',
-            '/produtos/{id}' => 'ProductsController@show'
+            '/produtos/{id}' => 'ProductsController@show',
+            '/array' => 'ProgrammingLogicController@iterateOverArray'
         ];
         break;
     case 'POST':
