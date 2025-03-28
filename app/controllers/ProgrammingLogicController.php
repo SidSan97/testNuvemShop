@@ -22,7 +22,7 @@ class ProgrammingLogicController extends RenderView {
     {
         header('Content-Type: application/json');
 
-        $file = 'C:\xampp\htdocs\testNuvemShop\arquivo2.csv';
+        $file = 'C:\xampp\htdocs\testNuvemShop\arquivo.csv';
         $dados = $this->programmingLogicResources->readCSVFile($file);
         var_dump($dados[0]['nome']);
 
