@@ -9,7 +9,7 @@ class ProductsModel extends Database {
         $this->pdo = $this->getConnection();
     }
 
-    public function fetch()
+    public function fetch(): string
     {
         $stmt = $this->pdo->query("SELECT * FROM produtos");
 
@@ -23,7 +23,7 @@ class ProductsModel extends Database {
         }
     }
 
-    public function fetchById(int $id)
+    public function fetchById(int $id): string
     {
         $stmt = $this->pdo->prepare("SELECT * FROM produtos WHERE id = ?");
         $stmt->execute([$id]);
@@ -38,53 +38,102 @@ class ProductsModel extends Database {
         }
     }
 
-    public function insert(array $data)
+    public function insert(array $data): string
     {
-        if(!$data) {
+        if (empty($data)) {
             http_response_code(403);
             return json_encode(["message" => "Cadastro de produto inválido."]);
         }
 
-        $stmt = $this->pdo->prepare("INSERT INTO produtos (nome, descricao, preco, estoque, created_at) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([
-            $data['nome'],
-            $data['descricao'],
-            $data['preco'],
-            $data['estoque'],
-            $data['created_at']
-        ]);
+        try {
+            $this->pdo->beginTransaction();
 
-        if ($stmt->rowCount() === 0) {
-            http_response_code(500); 
-            return json_encode(["message" => "Erro ao cadastrar produto. Tente novamente mais tarde."]);
+            $stmt = $this->pdo->prepare("
+                INSERT INTO produtos (nome, descricao, preco, estoque, created_at)
+                VALUES (:nome, :descricao, :preco, :estoque, :created_at)
+            ");
+
+            $stmt->bindParam(':nome', $data['nome'], PDO::PARAM_STR);
+            $stmt->bindParam(':descricao', $data['descricao'], PDO::PARAM_STR);
+            $data['preco'] = number_format((float)$data['preco'], 2, '.', '');
+            $stmt->bindParam(':preco', $data['preco'], PDO::PARAM_STR);
+            $stmt->bindParam(':estoque', $data['estoque'], PDO::PARAM_INT);
+            $stmt->bindParam(':created_at', $data['created_at'], PDO::PARAM_STR);
+
+            if(!$stmt->execute()) {
+                $this->pdo->rollBack(); 
+                http_response_code(500);
+                return json_encode(["message" => "Erro ao cadastrar produto. Tente novamente mais tarde."]);
+            }
+
+            $this->pdo->commit();
+            http_response_code(201);
+            return json_encode(["message" => "Produto cadastrado com sucesso!"]);
+
+        } catch (PDOException $e) {
+            $this->pdo->rollBack();
+            http_response_code(500);
+            return json_encode(["message" => "Erro ao cadastrar produto: " . $e->getMessage()]);
         }
-
-        http_response_code(201); 
-        return json_encode(["message" => "Produto cadastrado com sucesso!"]);
     }
 
-    public function update(array $data)
+    public function update(array $data, int $id): string
     {
-        if(!$data) {
+        if (empty($data)) {
             http_response_code(403);
-            return json_encode(["message" => "Cadastro de produto inválido."]);
+            return json_encode(["message" => "Alteração de produto inválido."]);
         }
 
-        $stmt = $this->pdo->prepare("UPDATE produtos SET (nome descricao, preco, estoque, created_at)");
-        $stmt->execute([
-            $data['nome'],
-            $data['descricao'],
-            $data['preco'],
-            $data['estoque'],
-            $data['created_at']
-        ]);
+        try {
+            $this->pdo->beginTransaction();
 
-        if ($stmt->rowCount() === 0) {
-            http_response_code(500); 
-            return json_encode(["message" => "Erro ao alterar o produto. Tente novamente mais tarde."]);
+            $stmt = $this->pdo->prepare("UPDATE produtos 
+                SET nome = :nome,  descricao = :descricao, preco = :preco, estoque = :estoque
+                WHERE id = :id
+            ");
+
+            $stmt->bindParam(':nome', $data['nome'], PDO::PARAM_STR);
+            $stmt->bindParam(':descricao', $data['descricao'], PDO::PARAM_STR);
+            $data['preco'] = number_format((float)$data['preco'], 2, '.', '');
+            $stmt->bindParam(':preco', $data['preco'], PDO::PARAM_STR);
+            $stmt->bindParam(':estoque', $data['estoque'], PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+            if(!$stmt->execute()) {
+                $this->pdo->rollBack(); 
+                http_response_code(500);
+                return json_encode(["message" => "Erro ao alterar o produto. Tente novamente mais tarde."]);
+            }
+
+            $this->pdo->commit();
+            http_response_code(201);
+            return json_encode(["message" => "Produto alterado com sucesso!"]);
+
+        } catch (PDOException $e) {
+            $this->pdo->rollBack();
+            http_response_code(500);
+            return json_encode(["message" => "Erro ao alterar o produto: " . $e->getMessage()]);
         }
+    }
 
-        http_response_code(200); 
-        return json_encode(["message" => "Produto alterado com sucesso!"]);
+    public function delete(int $id)
+    {
+        try {
+            $stmt = $this->pdo->prepare("DELETE FROM produtos WHERE id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            if($stmt->rowCount() === 0) {
+                http_response_code(500);
+                return json_encode(["message" => "Não foi possível excluir o produto. Produto inexistente"]);
+            }
+
+            http_response_code(201);
+            return json_encode(["message" => "Produto excluído com sucesso!"]);
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return json_encode(["message" => "Erro ao excluir o produto: " . $e->getMessage()]);
+        }
     }
 }

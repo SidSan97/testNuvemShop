@@ -2,7 +2,7 @@
 
 class SanitizeData {
 
-    public function sanitize($data): array
+    public function sanitize(array $data): array
     {
         $filteredData = [];
 

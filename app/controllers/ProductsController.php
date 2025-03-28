@@ -18,7 +18,7 @@ class ProductsController extends RenderView{
         ]);
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $this->loadView('home', [
             'product' => $this->productModel->fetchById($id)
@@ -27,19 +27,32 @@ class ProductsController extends RenderView{
 
     public function store()
     {
-        $data = $this->sanitizeData->sanitize($_POST);
+        $postData = file_get_contents("php://input");
+        $data = json_decode($postData, true);
+
+        $data = $this->sanitizeData->sanitize($data);
         
         $this->loadView('home', [
             'product'  => $this->productModel->insert($data)
         ]);
     }
 
-    public function put()
+    public function update(int $id)
     {
-        $data = $this->sanitizeData->sanitize($_POST);
+        $putData = file_get_contents("php://input");
+        $data = json_decode($putData, true);
+
+        $data = $this->sanitizeData->sanitize($data);
         
         $this->loadView('home', [
-            'product'  => $this->productModel->update($data)
+            'product'  => $this->productModel->update($data, $id)
+        ]);
+    }
+
+    public function delete(int $id)
+    {
+        $this->loadView('home', [
+            'product' => $this->productModel->delete($id)
         ]);
     }
 }
