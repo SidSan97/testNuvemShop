@@ -38,6 +38,15 @@ class ProductsModel extends Database {
         return json_encode($data);
     }
 
+    public function checkIfProductExists(string $name): bool
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM produtos WHERE nome = ?");
+        $stmt->bindParam(':nome', $name, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->rowCount() === 0 ? false : true;
+    }
+
     public function insert(array $data): string
     {
         if (empty($data)) {
@@ -124,7 +133,7 @@ class ProductsModel extends Database {
             $stmt->execute();
 
             if($stmt->rowCount() === 0) {
-                http_response_code(500);
+                http_response_code(403);
                 return json_encode(["message" => "Não foi possível excluir o produto. Produto inexistente"]);
             }
 

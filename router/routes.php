@@ -7,7 +7,8 @@ switch ($method) {
             '/' => 'ProductsController@index',
             '/produtos' => 'ProductsController@index',
             '/produtos/{id}' => 'ProductsController@show',
-            '/array' => 'ProgrammingLogicController@iterateOverArray'
+            '/array' => 'ProgrammingLogicController@iterateOverArray',
+            '/csv' => 'ProgrammingLogicController@getCSVFile'
         ];
         break;
     case 'POST':

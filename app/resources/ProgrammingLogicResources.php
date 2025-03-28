@@ -2,7 +2,7 @@
 
 class ProgrammingLogicResources {
 
-    public function getSecondLargestValueFromArray(array $numbers)
+    public function getSecondLargestValueFromArray(array $numbers): string
     {
         if (count($numbers) < 2) {
             http_response_code(403);
@@ -25,5 +25,26 @@ class ProgrammingLogicResources {
     
         http_response_code(200);
         return json_encode(["message" => "O segundo maior valor do array: $value2"]);
+    }
+
+    public function readCSVFile($file)
+    {
+        $data = [];
+
+        if (($handle = fopen($file, 'r')) !== false) {
+            $headers = fgetcsv($handle, 0, ';');
+
+            while (($row = fgetcsv($handle, 0, ';')) !== false) {
+                $data[] = array_combine($headers, $row);
+            }
+
+            fclose($handle);
+
+        } else {
+            http_response_code(500);
+            return json_encode(["message" => "Não foi possivel abrir o arquivo CSV"]);
+        }
+
+        return $data;
     }
 }

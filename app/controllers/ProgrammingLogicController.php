@@ -17,4 +17,17 @@ class ProgrammingLogicController extends RenderView {
             'product'  => $this->programmingLogicResources->getSecondLargestValueFromArray($this->array)
         ]);
     }
+
+    public function getCSVFile()
+    {
+        header('Content-Type: application/json');
+
+        $file = 'C:\xampp\htdocs\testNuvemShop\arquivo2.csv';
+        $dados = $this->programmingLogicResources->readCSVFile($file);
+        var_dump($dados[0]['nome']);
+
+        /*$this->loadView('home', [
+            'product'  => $this->programmingLogicResources->readCSVFile($file)
+        ]);*/
+    }
 }
