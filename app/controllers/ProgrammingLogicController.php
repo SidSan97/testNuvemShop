@@ -3,31 +3,28 @@
 class ProgrammingLogicController extends RenderView {
 
     private $array;
-    private $programmingLogicResources;
+    private $programmingLogicServices;
 
     public function __construct()
     {
-        $this->programmingLogicResources = new ProgrammingLogicResources();
+        $this->programmingLogicServices = new ProgrammingLogicServices();
         $this->array = [4, 8, 9, 6, 13, 2, 16];
     }
 
     public function iterateOverArray()
     {
         $this->loadView('home', [
-            'product'  => $this->programmingLogicResources->getSecondLargestValueFromArray($this->array)
+            'product'  => $this->programmingLogicServices->getSecondLargestValueFromArray($this->array)
         ]);
     }
 
     public function getCSVFile()
     {
-        header('Content-Type: application/json');
+        $file = __DIR__ . DIRECTORY_SEPARATOR . 'arquivo.csv';
+        $file = str_replace('app\controllers\\','',$file);
 
-        $file = 'C:\xampp\htdocs\testNuvemShop\arquivo.csv';
-        $dados = $this->programmingLogicResources->readCSVFile($file);
-        var_dump($dados[0]['nome']);
-
-        /*$this->loadView('home', [
-            'product'  => $this->programmingLogicResources->readCSVFile($file)
-        ]);*/
+        $this->loadView('home', [
+            'product'  => $this->programmingLogicServices->readCSVFile($file)
+        ]);
     }
 }

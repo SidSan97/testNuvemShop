@@ -40,18 +40,26 @@ class ProductsModel extends Database {
 
     public function checkIfProductExists(string $name): bool
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM produtos WHERE nome = ?");
-        $stmt->bindParam(':nome', $name, PDO::PARAM_STR);
-        $stmt->execute();
+        $stmt = $this->pdo->prepare("SELECT nome FROM produtos WHERE nome = ?");
+        $stmt->execute([$name]);
 
         return $stmt->rowCount() === 0 ? false : true;
     }
 
-    public function insert(array $data): string
+    public function insert(array $data, $csv = null): string | bool
     {
         if (empty($data)) {
             http_response_code(403);
-            return json_encode(["message" => "Cadastro de produto inválido."]);
+            return json_encode(["message" => "Não há produto para ser cadastrado."]);
+        }
+
+        if($this->checkIfProductExists($data['nome'])) {
+            if($csv) {
+                return  true;
+            } else {
+                http_response_code(403);
+                return json_encode(["message" => "Este produto já foi cadastrado."]);
+            }
         }
 
         try {

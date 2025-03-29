@@ -1,6 +1,15 @@
 <?php
 
-class ProgrammingLogicResources {
+class ProgrammingLogicServices {
+
+    private $productModel;
+    private $sanitizeData;
+
+    public function __construct()
+    {
+        $this->productModel = new ProductsModel();
+        $this->sanitizeData = new SanitizeData();
+    }
 
     public function getSecondLargestValueFromArray(array $numbers): string
     {
@@ -30,6 +39,7 @@ class ProgrammingLogicResources {
     public function readCSVFile($file)
     {
         $data = [];
+        $noInserted = [];
 
         if (($handle = fopen($file, 'r')) !== false) {
             $headers = fgetcsv($handle, 0, ';');
@@ -45,6 +55,22 @@ class ProgrammingLogicResources {
             return json_encode(["message" => "Não foi possivel abrir o arquivo CSV"]);
         }
 
-        return $data;
+        foreach ($data as $item) {
+            $dataFiltered = $this->sanitizeData->sanitize($item);
+            $send = $this->productModel->insert($dataFiltered, true);
+
+            if($send === true) {
+                array_push($noInserted, $item['nome']);
+            }
+        }
+
+        if(!empty($noInserted)) {
+            $noInserted = implode(',', $noInserted);
+            http_response_code(207);
+            return json_encode(["message" => "Os seguintes produtos não foram cadastrado por já terem sido cadastrados anteriormente: $noInserted"]);
+        } 
+
+        http_response_code(201);
+        return json_encode(["message" => "Produtos cadastrados com sucesso"]);
     }
 }
