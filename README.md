@@ -75,3 +75,6 @@ o <a href="https://www.postman.com/"> POSTMAN </a> para testa-la. Atente-se para
   <li> <strong> /Testdev/delete/id </strong> - (DELETE) Deletar produtos na API. </li>
 </ul>
 
+Na raíz do projeto está o <a href="https://github.com/SidSan97/testNuvemShop/blob/main/TestDev.postman_collection.json"> collection do Postman </a> deste projeto para poder testa-la localmente.
+
+<img src="https://github.com/SidSan97/testNuvemShop/blob/main/postman_screenshot.png">
