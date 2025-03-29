@@ -1,0 +1,303 @@
+{
+	"info": {
+		"_postman_id": "5d826e4c-5e76-4a2a-9935-b0e9ada801eb",
+		"name": "TestDev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22725845"
+	},
+	"item": [
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/testNuvemShop/produtos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"testNuvemShop",
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/testNuvemShop/produtos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"testNuvemShop",
+						"produtos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "URL inválida",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/testNuvemShop/kkkkkk",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"testNuvemShop",
+						"kkkkkk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar Produto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Processador Intel\",\r\n    \"descricao\": \"Processadores I5 da 12º geração\",\r\n    \"preco\": 899.90,\r\n    \"estoque\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/testNuvemShop/produtos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"testNuvemShop",
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar Produto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Tablet 6.0\",\r\n    \"descricao\": \"Tablet Multilaser de ultima geração\",\r\n    \"preco\": 500,\r\n    \"estoque\": 155\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/testNuvemShop/produtos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"testNuvemShop",
+						"produtos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir Produto",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/testNuvemShop/produtos/0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"testNuvemShop",
+						"produtos",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2º maior valor do array",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/testNuvemShop/array",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"testNuvemShop",
+						"array"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ler CSV",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/testNuvemShop/csv",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"testNuvemShop",
+						"csv"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/testNuvemShop/Testdev",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"testNuvemShop",
+						"Testdev"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get API By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/testNuvemShop/Testdev/show/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"testNuvemShop",
+						"Testdev",
+						"show",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir na API",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Produto C\",\r\n    \"preco\": 500\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/testNuvemShop/Testdev/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"testNuvemShop",
+						"Testdev",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update na API",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Produto A atualizado\",\r\n    \"preco\": 500\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/testNuvemShop/Testdev/update/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"testNuvemShop",
+						"Testdev",
+						"update",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete na API",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/testNuvemShop/Testdev/delete/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"testNuvemShop",
+						"Testdev",
+						"delete",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
