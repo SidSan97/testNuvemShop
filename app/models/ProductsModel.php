@@ -56,10 +56,10 @@ class ProductsModel extends Database {
         if($this->checkIfProductExists($data['nome'])) {
             if($csv) {
                 return  true;
-            } else {
-                http_response_code(403);
-                return json_encode(["message" => "Este produto já foi cadastrado."]);
-            }
+            } 
+            
+            http_response_code(403);
+            return json_encode(["message" => "Este produto já foi cadastrado."]);
         }
 
         try {
