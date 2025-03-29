@@ -8,12 +8,17 @@ switch ($method) {
             '/produtos' => 'ProductsController@index',
             '/produtos/{id}' => 'ProductsController@show',
             '/array' => 'ProgrammingLogicController@iterateOverArray',
-            '/csv' => 'ProgrammingLogicController@getCSVFile'
+            '/csv' => 'ProgrammingLogicController@getCSVFile',
+            '/Testdev' => 'IntegrationApiController@index',
+            '/Testdev/show/{id}' => 'IntegrationApiController@show'
         ];
         break;
     case 'POST':
         $routes = [
-            '/produtos' => 'ProductsController@store'
+            '/produtos' => 'ProductsController@store',
+            '/api/produtos' => 'IntegrationApiController@index',
+            '/Testdev/create' => 'IntegrationApiController@store',
+            '/Testdev/update/{id}' => 'IntegrationApiController@update'
         ];
         break;
     case 'PUT':
@@ -23,7 +28,8 @@ switch ($method) {
         break;
     case 'DELETE':
         $routes = [
-            '/produtos/{id}' => 'ProductsController@delete'
+            '/produtos/{id}' => 'ProductsController@delete',
+            '/Testdev/delete/{id}' => 'IntegrationApiController@delete'
         ];
         break;
     default:
