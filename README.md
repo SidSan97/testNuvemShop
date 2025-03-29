@@ -53,9 +53,25 @@ para orquestração das classes, sem precisar instalar dependências, além de f
    <li><strong>Private: </strong>A classe pode ser acessada apenas por membros ou funções da mesma classe</li>
 </ul>
 
+<hr>
 
+<h2>Como usar a aplicação</h2>
 
+Faça o clone do repositório. A aplicação recebe e retorna dados em formato json, eu recomendo uso de ferramentas como
+o <a href="https://www.postman.com/"> POSTMAN </a> para testa-la. Atente-se para os seguintes <strong>ENDPOINTS</strong> <br>
 
-
-
+<ul>
+  <li> <strong> /produtos </strong> - (GET) listar produtos do banco de dados. </li>
+  <li> <strong> /produtos/id </strong> - (GET) listar produtos especifico do banco de dados </li>
+  <li> <strong> /produtos </strong> - (POST) cadastrar produtos no banco de dados. </li>
+  <li> <strong> /produtos/id </strong> - (PUT) editar produtos no banco de dados. </li>
+  <li> <strong> /produtos/id </strong> - (DELETE) excluir produtos no banco de dados. </li>
+  <li> <strong> /array </strong> - (GET) Ver qual segundo maior valor em um array definido em: <i> app\controllers\ProgrammingLogicController.php </i> </li>
+  <li> <strong> /csv </strong> - (GET) ler produtos de um arquivo CSV e inseri-los no banco de dados. </li>
+  <li> <strong> /Testdev/id </strong> - (GET) listar produtos da API. </li>
+  <li> <strong> /Testdev/show/id </strong> - (GET) listar produtos da API via id. </li>
+  <li> <strong> /Testdev/create </strong> - (POST) Inserir produtos na API. </li>
+  <li> <strong> /Testdev/update/id </strong> - (POST) Editar produtos na API. </li>
+  <li> <strong> /Testdev/delete/id </strong> - (DELETE) Deletar produtos na API. </li>
+</ul>
 
